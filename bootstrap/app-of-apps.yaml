@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: apps
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argocd
+  source:
+    repoURL: 'https://github.com/jsbrain/argocd-app-of-apps-example.git'
+    targetRevision: HEAD
+    path: apps
+    directory:
+      recurse: true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
