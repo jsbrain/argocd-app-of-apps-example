@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-kubernetes-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx # Important: Specify the class created by the controller
+  rules:
+    - http:
+        paths:
+          - path: /hello-kubernetes # Requests to your-kind-ip/hello-kubernetes
+            pathType: Prefix
+            backend:
+              service:
+                name: hello-kubernetes # Name of the Service in service.yaml
+                port:
+                  number: 80 # Port the Service listens on
