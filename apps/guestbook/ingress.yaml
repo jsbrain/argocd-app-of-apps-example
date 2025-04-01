@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guestbook-ingress
+  namespace: guestbook # ASSUMPTION: Guestbook is in 'guestbook' namespace
+spec:
+  rules:
+    - host: guestbook.localcluster
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: guestbook-ui # ASSUMPTION: Service name is 'guestbook-ui'
+                port:
+                  number: 80 # ASSUMPTION: Service port is 80

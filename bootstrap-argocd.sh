@@ -37,7 +37,7 @@ kubectl label node "${CLUSTER_NAME}-worker2" ingress-ready=true --overwrite=true
 
 # --- START MetalLB Installation ---
 echo "Installing MetalLB..."
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.7/config/manifests/metallb-native.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-native.yaml
 
 echo "Waiting for MetalLB controller to become ready..."
 kubectl -n metallb-system rollout status deploy/controller --timeout=120s
@@ -58,7 +58,7 @@ echo "MetalLB setup complete."
 echo "Installing Nginx Ingress Controller..."
 # Use the generic 'cloud' deployment manifest which creates a LoadBalancer service
 # instead of the 'kind' manifest which uses NodePort.
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.1/deploy/static/provider/cloud/deploy.yaml
 
 echo "Waiting for Nginx Ingress controller admission webhook to become ready..."
 # The webhook is crucial for Ingress object validation and needs ~2m in Kind
