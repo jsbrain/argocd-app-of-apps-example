@@ -29,6 +29,14 @@ fi
 # Switch kubectl context to the kind cluster (important if script is re-run)
 kubectl config use-context "kind-${CLUSTER_NAME}"
 
+# Create required namespaces
+echo "Creating required namespaces..."
+kubectl create namespace ${ARGOCD_NAMESPACE} || true
+kubectl create namespace monitoring || true
+kubectl create namespace demo || true
+kubectl create namespace guestbook || true
+kubectl create namespace cert-manager || true
+
 # Label worker nodes for Ingress Controller compatibility
 # The Kind Ingress manifest expects nodes with label ingress-ready=true
 echo "Labeling worker nodes for ingress readiness..."
@@ -84,8 +92,6 @@ echo "Nginx Ingress Controller setup complete."
 # --- END Nginx Ingress Controller Installation ---
 
 # Step 2: Install ArgoCD into the cluster
-echo "Creating namespace ${ARGOCD_NAMESPACE}..."
-kubectl create namespace ${ARGOCD_NAMESPACE} || true
 echo "Installing ArgoCD..."
 kubectl apply -n ${ARGOCD_NAMESPACE} -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 

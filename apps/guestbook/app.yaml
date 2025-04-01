@@ -13,7 +13,7 @@ spec:
   source:
     repoURL: 'https://github.com/jsbrain/argocd-app-of-apps-example.git'
     targetRevision: HEAD
-    path: apps/guestbook
+    path: manifests/guestbook
   syncPolicy:
     automated:
       prune: true

@@ -12,3 +12,6 @@ spec:
   destinations:
     - namespace: '*'
       server: '*'
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace

@@ -13,7 +13,7 @@ spec:
   source:
     repoURL: 'https://github.com/jsbrain/argocd-app-of-apps-example.git'
     targetRevision: HEAD
-    path: apps/hello-world
+    path: manifests/hello-world
   syncPolicy:
     automated:
       prune: true
