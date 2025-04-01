@@ -48,9 +48,9 @@ echo "Waiting for MetalLB speakers to become ready (may take a moment)..."
 sleep 15
 kubectl wait --for=condition=ready pod -l app=metallb -n metallb-system --timeout=120s
 
-echo "Applying MetalLB configuration (using manifests/metallb-config.yaml)..."
+echo "Applying MetalLB configuration (using bootstrap/metallb-config.yaml)..."
 # Ensure this script is run from the repo root or adjust path.
-kubectl apply -f manifests/metallb-config.yaml
+kubectl apply -f bootstrap/metallb-config.yaml
 echo "MetalLB setup complete."
 # --- END MetalLB Installation ---
 
