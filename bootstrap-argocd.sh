@@ -21,6 +21,25 @@ REPO_URL="https://github.com/jsbrain/argocd-app-of-apps-example.git"
 echo "Creating Kind cluster '${CLUSTER_NAME}'..."
 kind create cluster --name "${CLUSTER_NAME}"
 
+# --- START MetalLB Installation ---
+echo "Installing MetalLB..."
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.7/config/manifests/metallb-native.yaml
+
+echo "Waiting for MetalLB controller to become ready..."
+kubectl -n metallb-system rollout status deploy/controller --timeout=120s
+
+echo "Waiting for MetalLB speakers to become ready (may take a moment)..."
+# Wait for the daemonset update to be observed and pods to start/become ready.
+# A simple sleep is less robust but often sufficient for local kind setups.
+sleep 15
+kubectl wait --for=condition=ready pod -l app=metallb -n metallb-system --timeout=120s
+
+echo "Applying MetalLB configuration (using manifests/metallb-config.yaml)..."
+# Ensure this script is run from the repo root or adjust path.
+kubectl apply -f manifests/metallb-config.yaml
+echo "MetalLB setup complete."
+# --- END MetalLB Installation ---
+
 # Step 2: Install ArgoCD into the cluster
 echo "Creating namespace ${ARGOCD_NAMESPACE}..."
 kubectl create namespace ${ARGOCD_NAMESPACE} || true
@@ -63,4 +82,14 @@ while true; do
   fi
 done
 
+# --- START Show Service IPs ---
+echo "---------------------------------------------------"
+echo "Listing application services with LoadBalancer IPs..."
+# Give apps a moment to potentially get IPs assigned after sync
+sleep 5
+kubectl get svc --all-namespaces -o wide | grep LoadBalancer | cat
+echo "---------------------------------------------------"
+# --- END Show Service IPs ---
+
 echo "Bootstrap complete. Press Ctrl+C to stop port-forwarding when finished."
+wait $PF_PID
