@@ -3,7 +3,15 @@ kind: Ingress
 metadata:
   name: prometheus-ingress
   namespace: monitoring # ASSUMPTION: Prometheus is in 'monitoring' namespace
+  annotations:
+    cert-manager.io/cluster-issuer: 'selfsigned-issuer'
+    kubernetes.io/tls-acme: 'true'
 spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - prometheus.localcluster
+      secretName: prometheus-tls
   rules:
     - host: prometheus.localcluster
       http:

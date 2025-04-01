@@ -3,7 +3,15 @@ kind: Ingress
 metadata:
   name: hello-world-ingress
   namespace: demo
+  annotations:
+    cert-manager.io/cluster-issuer: 'selfsigned-issuer'
+    kubernetes.io/tls-acme: 'true'
 spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - hello-world.localcluster
+      secretName: hello-world-tls
   rules:
     - host: hello-world.localcluster
       http:

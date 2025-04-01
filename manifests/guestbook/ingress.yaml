@@ -3,7 +3,15 @@ kind: Ingress
 metadata:
   name: guestbook-ingress
   namespace: guestbook
+  annotations:
+    cert-manager.io/cluster-issuer: 'selfsigned-issuer'
+    kubernetes.io/tls-acme: 'true'
 spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - guestbook.localcluster
+      secretName: guestbook-tls
   rules:
     - host: guestbook.localcluster
       http:
@@ -12,6 +20,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: guestbook-ui # ASSUMPTION: Service name is 'guestbook-ui'
+                name: guestbook
                 port:
-                  number: 80 # ASSUMPTION: Service port is 80
+                  number: 80
