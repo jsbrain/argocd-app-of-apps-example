@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hello-kubernetes-ingress
-  namespace: demo # Changed from 'default' to 'demo' to match the app namespace
+  name: hello-world-ingress
+  namespace: demo
 spec:
   rules:
-    - host: hello-kubernetes.localcluster
+    - host: hello-world.localcluster
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: hello-kubernetes # Service name
+                name: hello-world # Service name
                 port:
                   number: 80 # Service port
