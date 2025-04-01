@@ -6,8 +6,8 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: 'selfsigned-issuer'
     kubernetes.io/tls-acme: 'true'
-    # nginx.ingress.kubernetes.io/ssl-passthrough: 'true'
-    # nginx.ingress.kubernetes.io/backend-protocol: 'HTTPS'
+    nginx.ingress.kubernetes.io/ssl-passthrough: 'true'
+    nginx.ingress.kubernetes.io/backend-protocol: 'HTTPS'
 spec:
   ingressClassName: nginx
   tls:

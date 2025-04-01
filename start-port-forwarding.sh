@@ -16,7 +16,7 @@ echo "------------------------"
 echo ""
 
 echo "Port forwarding starting. Services will be available at:"
-echo "http://[service].localcluster:8080"
+echo "http://[service].localcluster:8880"
 echo "https://[service].localcluster:8443"
 echo "- https://argocd.localcluster:8443 (ArgoCD UI)"
 echo "- https://prometheus.localcluster:8443 (Prometheus)"
@@ -26,4 +26,4 @@ echo "- https://guestbook.localcluster:8443 (Guestbook app)"
 echo "- https://hello-kubernetes.localcluster:8443 (Hello Kubernetes app)"
 
 echo "Starting port forwarding for ingress-nginx..."
-kubectl port-forward -n ingress-nginx service/ingress-nginx-controller 8080:80 8443:443
+kubectl port-forward -n ingress-nginx service/ingress-nginx-controller 8880:80 8443:443
