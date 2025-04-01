@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: apps
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: monitoring # Deploy Grafana to 'monitoring' ns
+  source:
+    # Points to the directory within this Git repo where Grafana manifests will be
+    repoURL: 'https://github.com/jsbrain/argocd-app-of-apps-example.git'
+    targetRevision: HEAD
+    path: manifests/grafana # ASSUMPTION: Manifests will be here
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

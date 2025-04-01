@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: monitoring # ASSUMPTION: Grafana is in 'monitoring' namespace
+spec:
+  rules:
+    - host: grafana.localcluster
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana # ASSUMPTION: Service name is 'grafana'
+                port:
+                  number: 80 # ASSUMPTION: Service port is 80 (check if it's 3000)
