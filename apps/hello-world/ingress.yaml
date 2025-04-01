@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hello-world-ingress
-  namespace: default # Deploys to 'default' namespace
+  namespace: demo # Changed from 'default' to 'demo' to match the app namespace
 spec:
   rules:
     - host: hello-world.localcluster

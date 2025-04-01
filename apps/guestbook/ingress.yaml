@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: guestbook-ingress
-  namespace: guestbook # ASSUMPTION: Guestbook is in 'guestbook' namespace
+  namespace: default # Changed from 'guestbook' to 'default' to match the service namespace
 spec:
   rules:
     - host: guestbook.localcluster

@@ -9,7 +9,7 @@ spec:
   project: apps
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: default
+    namespace: demo
   source:
     repoURL: 'https://github.com/jsbrain/argocd-app-of-apps-example.git'
     targetRevision: HEAD
